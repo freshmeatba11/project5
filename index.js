@@ -5,7 +5,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 const authRoute = require("./routes/auth-route");
 const profileRoute = require("./routes/profile-route");
-require("./config/passport");
+require("./config/passport.js");
+const cookieSession = require("cookie-session");
+const passport = require("passport");
 
 mongoose
   .connect(process.env.DB_CONNECT, {
@@ -23,6 +25,14 @@ mongoose
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cookieSession({
+    keys: [process.env.SECRET],
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use("/auth", authRoute);
 app.use("/profile", profileRoute);
 

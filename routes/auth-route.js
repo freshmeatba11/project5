@@ -13,7 +13,7 @@ router.get(
 );
 
 router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
-  res.redirext("/profile");
+  res.redirect("/profile");
 });
 
 module.exports = router;
