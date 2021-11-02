@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
+const authRoute = require("./routes/auth-route");
 
 mongoose
   .connect(
@@ -23,6 +24,7 @@ mongoose
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/auth", authRoute);
 
 app.get("/", (req, res) => {
   res.render("index");
