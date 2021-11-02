@@ -4,15 +4,13 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const authRoute = require("./routes/auth-route");
+require("./config/passport");
 
 mongoose
-  .connect(
-    "mongodb+srv://778899:778899password@cluster0.z1bkd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.DB_CONNECT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connect to mongodb atlas.");
   })

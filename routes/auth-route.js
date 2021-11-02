@@ -5,10 +5,11 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/google", (req, res) => {
+router.get(
+  "/google",
   passport.authenticate("google", {
     scope: ["profile"],
-  });
-});
+  })
+);
 
 module.exports = router;
