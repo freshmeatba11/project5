@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const authRoute = require("./routes/auth-route");
+const profileRoute = require("./routes/profile-route");
 require("./config/passport");
 
 mongoose
@@ -23,6 +24,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRoute);
+app.use("/profile", profileRoute);
 
 app.get("/", (req, res) => {
   res.render("index");
