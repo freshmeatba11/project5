@@ -17,11 +17,14 @@
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
         <% if(!user){ %>
         <li class="nav-item">
-          <a class="nav-link" href="/auth/login">Login</a>
+          <a class="nav-link" href="/auth/login">Log in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/signup">Sign up</a>
         </li>
         <% } %> <% if(user){ %>
         <li class="nav-item">
-          <a class="nav-link" href="/auth/logout">Logout</a>
+          <a class="nav-link" href="/auth/logout">Log out</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/profile">Profile</a>
