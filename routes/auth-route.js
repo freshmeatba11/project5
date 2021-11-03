@@ -5,10 +5,16 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+router.get("/logout", (req, res) => {
+  req.logOut();
+  res.redirect("/");
+});
+
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["profile"],
+    scope: ["profile", "email"],
+    prompt: "select_account",
   })
 );
 
