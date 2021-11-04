@@ -16,23 +16,39 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/auth/login",
+    failureFlash: "Wrong email or password.",
+  }),
+  (req, res) => {
+    res.redirect("/profile");
+  }
+);
+
 router.post("/signup", async (req, res) => {
   let { name, email, password } = req.body;
   //check if the data is already in db
   const emailExist = await User.findOne({ email });
-  if (emailExist) return res.status(400).send("Email already exist.");
+  if (emailExist) {
+    req.flash("error_msg", "Email has already been registered.");
+    res.redirect("/auth/signup");
+  }
 
-  const hash = await bcrypt.hash(password, 10);
-  password = hash;
-  let newUser = new User({ name, email, password });
-  try {
-    const savedUser = await newUser.save();
-    res.status(200).send({
-      msg: "User saved.",
-      saveObj: savedUser,
-    });
-  } catch (err) {
-    res.send(err);
+  if (!emailExist) {
+    const hash = await bcrypt.hash(password, 10);
+    password = hash;
+    let newUser = new User({ name, email, password });
+    try {
+      await newUser.save();
+      req.flash("success_msg", "Registration succeeds. You can login now.");
+      res.redirect("/auth/login");
+    } catch (err) {
+      console.log(err);
+      req.flash("error_msg", err.errors.name.properties.message);
+      res.redirect("/auth/signup");
+    }
   }
 });
 
