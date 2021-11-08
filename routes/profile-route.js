@@ -3,6 +3,7 @@ const Post = require("../models/post-model");
 
 const authCheck = (req, res, next) => {
   if (!req.isAuthenticated()) {
+    req.session.returnTo = req.originalUrl;
     res.redirect("/auth/login");
   } else {
     next();
